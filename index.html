@@ -1,0 +1,128 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Slider</title>
+	<style type="text/css">
+		#front {
+			height: 300px;
+			width:  500px;
+			position: absolute;
+			top: 5px;
+			left: 5px;
+			border: 1px solid red;
+			overflow: hidden;
+			z-index: 99;
+		}
+
+		#imagesHolder {
+			height: 300px;
+			width:  2600px;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			z-index: 1;
+			-webkit-transition: .5s left;
+		    -moz-transition: .5s left;
+		    -ms-transition: .5s left;
+		    -o-transition: .5s left;
+		}
+
+		#imagesHolder > ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+			word-spacing: -.25em;
+		}
+
+		#imagesHolder > ul > li {
+			display: inline;
+			word-spacing: normal;
+			margin: 0;
+			padding: 0;
+		}
+
+		.toLeft {
+			top: 140px;
+			left: 5px;
+			position: absolute;
+			display: none;
+			z-index: 99;
+		}
+
+		.toRight {
+			top: 140px;
+			left: 455px;
+			position: absolute;
+			z-index: 99;
+		}
+
+
+	</style>
+
+</head>
+<body>
+
+	<div id="front">
+		<div id="imagesHolder">
+		    <ul>
+	    		<li><img src="./images/01.jpg" width="500px"></li>
+	    		<li><img src="./images/02.jpg" width="500px"></li>
+	    		<li><img src="./images/03.jpg" width="500px"></li>
+	    		<li><img src="./images/04.jpg" width="500px"></li>
+	    		<li><img src="./images/05.jpg" width="500px"></li>
+	    	</ul>
+		</div>
+		<img src="./images/left.png" class="toLeft">
+		<img src="./images/right.png" class="toRight">
+	</div>
+
+</body>
+</html>
+
+<script>
+
+var imagesHolder = document.getElementById('imagesHolder');
+var img = imagesHolder.getElementsByTagName('img')[0];
+var toLeftButton = document.getElementsByClassName('toLeft')[0];
+var toRightButton = document.getElementsByClassName('toRight')[0];
+
+// toLeftButton.style.display = 'none';
+// toRightButton.style.display = 'block';
+imagesHolder.style.left = '0px';
+
+
+var goNext = function () {
+		imagesHolder.style.left = imagesHolder.offsetLeft - img.width + 'px';
+		checkButton(imagesHolder.offsetLeft - img.width);
+	}
+
+var goPrev= function () {
+		imagesHolder.style.left = imagesHolder.offsetLeft + img.width + 'px';
+		checkButton(imagesHolder.offsetLeft + img.width);
+	}
+
+
+var checkButton = function (tst) {
+
+	if (tst == 0) {
+		toRightButton.style.display = 'block';
+		toLeftButton.style.display = 'none';
+	}
+
+	if (tst == -500 || tst == -1500)  {
+		toRightButton.style.display = 'block';
+		toLeftButton.style.display = 'block';
+	}
+
+	if (tst == -2000) {
+		toRightButton.style.display = 'none';
+		toLeftButton.style.display = 'block';
+	}
+}
+
+toLeftButton.addEventListener("click", goPrev);
+toRightButton.addEventListener("click", goNext);
+
+
+</script>
